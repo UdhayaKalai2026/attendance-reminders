@@ -1,0 +1,8 @@
+{
+  "name": "attendance-reminder-script",
+  "private": true,
+  "description": "Checks attendance and sends free FCM push reminders - run by GitHub Actions on a schedule",
+  "dependencies": {
+    "firebase-admin": "^12.1.0"
+  }
+}
