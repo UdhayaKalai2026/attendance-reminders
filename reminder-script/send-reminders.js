@@ -74,9 +74,6 @@ async function main() {
     ? shiftDoc.data()
     : { startTime: '09:30', endTime: '18:00', graceMinutes: 15 };
 
-  // Group today's punches by employee, sorted chronologically, so we can
-  // tell whether they've clocked in at all and what their most recent
-  // punch type is (in progress vs already clocked out).
   const byUser = {};
   attSnap.forEach((doc) => {
     const d = doc.data();
@@ -91,7 +88,7 @@ async function main() {
   usersSnap.forEach((userDoc) => {
     const uid = userDoc.id;
     const u = userDoc.data();
-    if (!u || u.role === 'owner') return; // owners run flexible timing
+    if (!u || u.role === 'owner') return;
     if (u.timingMode === 'flexible') return;
     if (!Array.isArray(u.fcmTokens) || !u.fcmTokens.length) return;
 
@@ -121,8 +118,6 @@ async function main() {
     }
   });
 
-  // Filter out anyone already reminded today (flag doc exists), and mark
-  // the ones we're about to send so a future run this same day skips them.
   const toSend = [];
   for (const c of candidates) {
     const flagRef = db.collection('reminderLog').doc(`${c.uid}_${dateKey}_${c.kind}`);
