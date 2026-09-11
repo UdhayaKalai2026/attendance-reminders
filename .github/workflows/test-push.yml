@@ -1,0 +1,25 @@
+name: Test push (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      token:
+        description: 'FCM registration token to send a test push to'
+        required: true
+        type: string
+
+jobs:
+  send-test-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install firebase-admin
+      - name: Send test push
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          TEST_TOKEN: ${{ inputs.token }}
+        run: node send-test-push.js
