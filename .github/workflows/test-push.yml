@@ -22,4 +22,4 @@ jobs:
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           TEST_TOKEN: ${{ inputs.token }}
-        run: node send-test-push.js
+        run: node reminder-script/send-test-push.js
